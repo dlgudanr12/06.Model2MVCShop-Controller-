@@ -21,6 +21,8 @@
 			type="com.model2.mvc.service.domain.Product" />
 		<typeAlias alias="purchase"
 			type="com.model2.mvc.service.domain.Purchase" />
+		<typeAlias alias="basket"
+			type="com.model2.mvc.service.domain.Basket" />
 		<typeAlias alias="search"
 			type="com.model2.mvc.common.Search" />
 	</typeAliases>
@@ -30,6 +32,7 @@
 		<mapper resource="sql/UserMapper.xml" />
 		<mapper resource="sql/ProductMapper.xml" />
 		<mapper resource="sql/PurchaseMapper.xml" />
+		<mapper resource="sql/BasketMapper.xml" />
 	</mappers>
 
 </configuration>
