@@ -48,6 +48,11 @@ public class PurchaseDaoImpl implements PurchaseDao {
 	}
 
 	public void updatePurchase(Purchase purchase) throws Exception {
+		if (purchase.getDivyDate() == null || purchase.getDivyDate().equals("")) {
+			LocalDate localDate = LocalDate.now();
+			purchase.setDivyDate(localDate.plusDays(3).toString());
+		}
+		
 		sqlSession.update("PurchaseMapper.updatePurchase", purchase);
 	}
 
@@ -67,6 +72,7 @@ public class PurchaseDaoImpl implements PurchaseDao {
 		List<Purchase> list = sqlSession.selectList("PurchaseMapper.getPurchaseList", map);
 		List<Purchase> listPurchase = new ArrayList<Purchase>();
 		for (Purchase purchase : list) {
+			purchase.setPurchaseProd(sqlSession.selectOne("ProductMapper.getProduct",purchase.getPurchaseProd().getProdNo()));
 			purchase.setPaymentOption(purchase.getPaymentOption().trim());
 			purchase.setTranCode(purchase.getTranCode().trim());
 			listPurchase.add(purchase);

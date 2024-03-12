@@ -68,12 +68,13 @@
 	<update id="updatePurchase" parameterType="purchase">
 		UPDATE transaction
 		<set>
-			payment_option=#{paymentOption},
-			receiver_name=#{receiverName},
-			receiver_phone=#{receiverPhone},
-			demailaddr=#{divyAddr},
-			dlvy_request=#{divyRequest},
-			dlvy_date=#{divyDate}
+			payment_option=#{paymentOption:CHAR} ,
+			receiver_name=#{receiverName:VARCHAR},
+			receiver_phone=#{receiverPhone:VARCHAR},
+			demailaddr=#{divyAddr:VARCHAR},
+			dlvy_request=#{divyRequest:VARCHAR},
+			dlvy_date=#{divyDate:DATE},
+			tran_quantity=#{tranQuantity}
 		</set>
 		WHERE tran_no=#{tranNo}
 	</update>

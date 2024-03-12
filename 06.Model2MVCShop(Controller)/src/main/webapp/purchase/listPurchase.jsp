@@ -92,10 +92,11 @@
 						<td></td>
 						<td align="left">${purchase.receiverPhone }</td>
 						<td></td>
-						<td align="left"> <c:if
-								test="${purchase.tranCode=='1' }">구매완료</c:if> <c:if
-								test="${purchase.tranCode=='2' }">배송중</c:if> <c:if
-								test="${purchase.tranCode=='3' }">배송완료</c:if> 상태 입니다.
+						<td align="left"> 
+							<c:if test="${purchase.tranCode=='1' }">구매완료
+								<a href="/updatePurchaseView.do?tranNo=${purchase.tranNo }">구매 수정</a></c:if>
+							<c:if test="${purchase.tranCode=='2' }">배송중</c:if> 
+							<c:if test="${purchase.tranCode=='3' }">배송완료</c:if>
 						</td>
 						<td></td>
 						<td align="left"><c:if test="${purchase.tranCode=='2' }">

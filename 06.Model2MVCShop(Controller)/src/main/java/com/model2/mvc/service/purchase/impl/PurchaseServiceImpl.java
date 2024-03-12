@@ -28,18 +28,19 @@ public class PurchaseServiceImpl implements PurchaseService {
 
 	@Override
 	public Purchase addPurchase(Purchase purchase) throws Exception {
-		//재고 수량과 상품 수량 계산 후 SQL로 각 각 저장하기.
-		int newProdQuantity = productDao.findProduct(purchase.getPurchaseProd().getProdNo()).getProdQuantity()-purchase.getTranQuantity();
-		if(newProdQuantity<0) {
-			purchase.setTranQuantity(purchase.getTranQuantity()+newProdQuantity);
-			newProdQuantity=0;
+		// 재고 수량과 상품 수량 계산 후 SQL로 각 각 저장하기.
+		int newProdQuantity = productDao.findProduct(purchase.getPurchaseProd().getProdNo()).getProdQuantity()
+				- purchase.getTranQuantity();
+		if (newProdQuantity < 0) {
+			purchase.setTranQuantity(purchase.getTranQuantity() + newProdQuantity);
+			newProdQuantity = 0;
 		}
 		purchase.getPurchaseProd().setProdQuantity(newProdQuantity);
-		
-		//집어넣기
+
+		// 집어넣기
 		productDao.updateQuantity(purchase.getPurchaseProd());
 		purchaseDao.insertPurchase(purchase);
-		
+
 		return purchase;
 	}
 
@@ -59,6 +60,20 @@ public class PurchaseServiceImpl implements PurchaseService {
 
 	@Override
 	public Purchase updatePurchase(Purchase purchase) throws Exception {
+		// 재고 수량과 상품 수량 계산 후 SQL로 각 각 저장하기.
+		Purchase defaultPurchase=purchaseDao.findPurchase(purchase.getTranNo());
+		int newProdQuantity = defaultPurchase.getPurchaseProd().getProdQuantity()
+				+ defaultPurchase.getTranQuantity() - purchase.getTranQuantity();
+
+		if (newProdQuantity < 0) {
+			purchase.setTranQuantity(purchase.getTranQuantity() + newProdQuantity);
+			newProdQuantity = 0;
+		}
+		System.out.println("PurchaseServiceImpl.updatePurchase.newProdQuantity : "+ newProdQuantity);
+		defaultPurchase.getPurchaseProd().setProdQuantity(newProdQuantity);
+
+		// 집어넣기
+		productDao.updateQuantity(defaultPurchase.getPurchaseProd());
 		purchaseDao.updatePurchase(purchase);
 		return purchaseDao.findPurchase(purchase.getTranNo());
 	}
@@ -78,7 +93,7 @@ public class PurchaseServiceImpl implements PurchaseService {
 		Map<String, Object> map = new HashMap<String, Object>();
 		map.put("list", purchaseDao.getDeliveryList(search));
 		map.put("totalCount", purchaseDao.getTotalCountOfDeliveryList(search));
-		
+
 		return map;
 	}
 
