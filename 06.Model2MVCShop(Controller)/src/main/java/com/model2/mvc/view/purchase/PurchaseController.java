@@ -131,7 +131,6 @@ public class PurchaseController {
 		modelAndView.setViewName("forward:/purchase/listPurchase.jsp");
 
 		System.out.println("[listPurchase() end......]\n");
-
 		return modelAndView;
 	}
 

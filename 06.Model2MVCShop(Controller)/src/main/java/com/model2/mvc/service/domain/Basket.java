@@ -6,6 +6,8 @@ public class Basket {
 	private int prodNo;
 	private String userId;
 	private int basketQuantity;
+	
+	private Product basketProd;
 
 	public Basket() {
 		// TODO Auto-generated constructor stub
@@ -41,6 +43,14 @@ public class Basket {
 
 	public void setBasketQuantity(int basketQuantity) {
 		this.basketQuantity = basketQuantity;
+	}
+
+	public Product getBasketProd() {
+		return basketProd;
+	}
+
+	public void setBasketProd(Product basketProd) {
+		this.basketProd = basketProd;
 	}
 
 }

@@ -55,15 +55,15 @@ public class ProductController {
 	public String getProduct(@ModelAttribute("product") Product product, @RequestParam("menu") String menu,
 			HttpServletRequest request, HttpServletResponse response, Model model) throws Exception {
 		System.out.println("\n:: ==> getProduct() start......]");
-		System.out.println("ProductController.getProduct.manu : "+menu);
+		System.out.println("ProductController.getProduct.manu : " + menu);
 
 		String resultPath = "";
 		String history = "";
 		String cookieNewValue;
-		
-		product=productService.getProduct(product.getProdNo());
+
+		product = productService.getProduct(product.getProdNo());
 		model.addAttribute("product", product);
-		
+
 		history += product.getProdNo() + ":" + product.getProdName().replaceAll(" ", "_") + "/";
 		for (Cookie cookie : request.getCookies()) {
 			if (cookie.getName().equals("history")) {
@@ -87,34 +87,36 @@ public class ProductController {
 		System.out.println("[getProduct() end......]\n");
 		return resultPath;
 	}
-	
+
 	@RequestMapping("/listProduct.do")
-	public String listProduct(@ModelAttribute("search") Search search,@RequestParam("menu") String menu, Model model) throws Exception {
+	public String listProduct(@ModelAttribute("search") Search search, @RequestParam("menu") String menu, Model model)
+			throws Exception {
 
 		System.out.println("\n:: ==> listProduct() start......]");
-		
-		if(search.getCurrentPage()==0) {
+
+		if (search.getCurrentPage() == 0) {
 			search.setCurrentPage(1);
 		}
-		
+
 		search.setPageSize(pageSize);
-		
-		Map<String, Object> map =productService.getProductList(search);
-		
-		Page resultPage = new Page(search.getCurrentPage(), ((Integer) map.get("totalCount")).intValue(), pageUnit, pageSize);
+
+		Map<String, Object> map = productService.getProductList(search);
+
+		Page resultPage = new Page(search.getCurrentPage(), ((Integer) map.get("totalCount")).intValue(), pageUnit,
+				pageSize);
 		System.out.println("listProduct.resultPage ::" + resultPage);
 
 		model.addAttribute("list", map.get("list"));
 		model.addAttribute("resultPage", resultPage);
 		model.addAttribute("search", search);
-
+		
 		model.addAttribute("menu", menu);
 
 		System.out.println("[listProduct() end......]\n");
 
 		return "forward:/product/listProduct.jsp";
 	}
-	
+
 	@RequestMapping("/updateProduct.do")
 	public String updateProduct(@ModelAttribute("product") Product product, Model model) throws Exception {
 
@@ -126,9 +128,9 @@ public class ProductController {
 
 		System.out.println("[updateProduct() end......]\n");
 
-		return "redirect:/getProduct.do?prodNo="+product.getProdNo()+"&menu=manage";
+		return "redirect:/getProduct.do?prodNo=" + product.getProdNo() + "&menu=manage";
 	}
-	
+
 	@RequestMapping("/updateProductView.do")
 	public String updateProductView(@ModelAttribute("product") Product product, Model model) throws Exception {
 
@@ -140,14 +142,15 @@ public class ProductController {
 
 		return "forward:/product/updateProduct.jsp";
 	}
-	
+
 	@RequestMapping("/updateQuantity.do")
-	public String updateQuantity(@ModelAttribute("product") Product product, @ModelAttribute("search") Search search,Model model) throws Exception {
+	public String updateQuantity(@ModelAttribute("product") Product product, @ModelAttribute("search") Search search,
+			Model model) throws Exception {
 
 		System.out.println("\n:: ==> updateQuantity() start......]");
-		
+
 		productService.updateQuantity(product);
-		
+
 		model.addAttribute("search", search);
 
 		System.out.println("[updateQuantity() end......]\n");

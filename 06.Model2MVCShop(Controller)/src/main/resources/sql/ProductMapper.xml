@@ -88,7 +88,7 @@
 				AND <![CDATA[price <= #{searchPriceUpperLimit}]]>
 			</if>
 		</trim>
-		<if test=" searchOrderBy==null or searchOrderBy.equals('0')">
+		<if test=" searchOrderBy==null or searchOrderBy==0">
 			ORDER BY prod_no
 		</if>
 		<if test="searchOrderBy!=null">

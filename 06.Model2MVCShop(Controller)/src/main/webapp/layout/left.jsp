@@ -97,6 +97,14 @@ function history(){
 					<a href="/listPurchase.do"  target="rightFrame">구매이력조회</a>
 				</td>
 			</tr>
+			<tr>
+				<td class="DepthEnd">&nbsp;</td>
+			</tr>
+			<tr>
+				<td class="Depth03">
+					<a href="/listBasket.do"  target="rightFrame">장바구니</a>
+				</td>
+			</tr>
 			<%  }%>
 			<tr>
 				<td class="DepthEnd">&nbsp;</td>
